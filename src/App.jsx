@@ -1,35 +1,73 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React, { useState, useMemo, useCallback } from "react";
+import PropTypes from "prop-types";
+import { OrdersContext } from "./contexts/OrderContext/OrderContext.jsx";
+import Dashboard from "./components/Dashboard/Dashboard.jsx";
+import NewOrderForm from "./components/NewOrderForm/NewOrderForm.jsx";
 
-function App() {
-  const [count, setCount] = useState(0)
+const App = () => {
+  const [orders, setOrders] = useState([
+    {
+      id: 1,
+      customer: "Juan Pérez",
+      date: new Date(),
+      status: "pending",
+      items: [
+        { productId: 101, name: "Mouse", quantity: 2, price: 1500 },
+        { productId: 102, name: "Teclado", quantity: 1, price: 3000 },
+      ],
+    },
+    {
+      id: 2,
+      customer: "María López",
+      date: new Date(),
+      status: "shipped",
+      items: [{ productId: 201, name: "Notebook", quantity: 1, price: 250000 }],
+    },
+  ]);
+
+  const [filter, setFilter] = useState("all");
+
+  const addOrder = useCallback((newOrder) => {
+    setOrders((prev) => [
+      ...prev,
+      { ...newOrder, id: prev.length + 1, date: new Date() },
+    ]);
+  }, []);
+
+  const filteredOrders = useMemo(() => {
+    if (filter === "all") return orders;
+    return orders.filter((pedido) => pedido.status === filter);
+  }, [orders, filter]);
+
+  const stats = useMemo(() => {
+    const pending = orders.filter((o) => o.status === "pending").length;
+    const shipped = orders.filter((o) => o.status === "shipped").length;
+    const delivered = orders.filter((o) => o.status === "delivered").length;
+    return {
+      total: orders.length,
+      pending,
+      shipped,
+      delivered,
+    };
+  }, [orders]);
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <OrdersContext.Provider value={{ orders, addOrder, filter, setFilter }}>
+      <div className="app">
+        <h1>📦 MailAméricas - Sistema de Gestión de Pedidos</h1>
+        <Dashboard
+          orders={orders}
+          filteredOrders={filteredOrders}
+          stats={stats}
+        />
+        <NewOrderForm />
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+    </OrdersContext.Provider>
+  );
+};
 
-export default App
+App.propTypes = {
+  children: PropTypes.node,
+};
+
+export default App;
