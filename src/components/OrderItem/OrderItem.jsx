@@ -1,4 +1,5 @@
 import PropTypes from "prop-types";
+import "./orderItem.css"
 
 function OrderItem({ id, customer, items, status, date }) {
   return (

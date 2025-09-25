@@ -1,0 +1,14 @@
+.lista-pedidos {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .lista-pedidos > p {
+    font-weight: 600;
+    color: #777;
+    font-style: italic;
+    text-align: center;
+    margin-top: 20px;
+  }
+  

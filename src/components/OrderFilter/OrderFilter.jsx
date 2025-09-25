@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import PropTypes from "prop-types";
 import { OrdersContext } from "../../contexts/OrderContext/OrderContext.jsx";
+import "./orderFilter.css";
 
 function OrderFilter({ filter }) {
   const { setFilter } = useContext(OrdersContext);

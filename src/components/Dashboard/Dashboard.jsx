@@ -4,6 +4,8 @@ import { OrdersContext } from "../../contexts/OrderContext/OrderContext.jsx";
 import OrderFilter from "../OrderFilter/OrderFilter.jsx";
 import OrderList from "../OrderList/OrderList.jsx";
 import OrderStats from "../OrderStats/OrderStats.jsx";
+import "./Dashboard.css";
+
 
 function Dashboard({ filteredOrders, stats }) {
   const { filter } = useContext(OrdersContext);

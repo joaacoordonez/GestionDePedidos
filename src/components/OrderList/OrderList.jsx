@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import OrderItem from "../OrderItem/OrderItem.jsx";
+import "./orderList.css";
 
 function OrderList({ orders }) {
   if (orders.length === 0) {

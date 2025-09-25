@@ -1,0 +1,24 @@
+.filtros {
+    margin-bottom: 25px;
+  }
+  
+  .filtros h3 {
+    color: #4a90e2;
+    margin-bottom: 12px;
+    font-weight: 700;
+  }
+  
+  .filtros select {
+    padding: 8px 12px;
+    border-radius: 8px;
+    border: 1.5px solid #ccc;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+    cursor: pointer;
+  }
+  
+  .filtros select:focus {
+    outline: none;
+    border-color: #4a90e2;
+  }
+  
