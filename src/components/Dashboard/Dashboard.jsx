@@ -1,11 +1,11 @@
 import React, { useContext } from "react";
 import PropTypes from "prop-types";
-import { OrdersContext } from "../../App.jsx"; 
+import { OrdersContext } from "../../contexts/OrderContext/OrderContext.jsx"; 
 import OrderFilter from "../OrderFilter/OrderFilter.jsx";
 import OrderList from "../OrderList/OrderList.jsx";
 import OrderStats from "../OrderStats/OrderStats.jsx";
 
-function Dashboard({ orders, filteredOrders, stats }) {
+function Dashboard({ filteredOrders, stats }) {
   const { filter } = useContext(OrdersContext);
 
   return (
@@ -23,8 +23,8 @@ function Dashboard({ orders, filteredOrders, stats }) {
     </div>
   );
 }
+
 Dashboard.propTypes = {
-  orders: PropTypes.array.isRequired,
   filteredOrders: PropTypes.array.isRequired,
   stats: PropTypes.shape({
     total: PropTypes.number.isRequired,
