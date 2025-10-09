@@ -5,11 +5,9 @@ import "./orderStats.css"
 function OrderStats({ total, pending, shipped, delivered }) {
   return (
     <div className="estadisticas">
-      <h3>📊 Estadísticas</h3>
-      <p>Total de pedidos: {total}</p>
-      <p>Pendientes: {pending}</p>
-      <p>Enviados: {shipped}</p>
-      <p>Entregados: {delivered}</p>
+      <h3>Estadísticas</h3>
+      <p>| Total de pedidos: {total} - Pendientes: {pending} - Enviados: {shipped} - Entregados: {delivered} |</p>
+    
     </div>
   );
 }

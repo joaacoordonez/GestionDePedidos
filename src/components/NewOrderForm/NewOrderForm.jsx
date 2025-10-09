@@ -56,7 +56,7 @@ function NewOrderForm() {
 
   return (
     <form onSubmit={handleSubmit} className="formulario-pedido">
-      <h2>➕ Nuevo Pedido</h2>
+      <h2>Nuevo Pedido</h2>
 
       <label>
         Cliente:
@@ -87,19 +87,23 @@ function NewOrderForm() {
             onChange={(e) => handleItemChange(index, "name", e.target.value)}
             required
           />
+          <h2>Cantidad: </h2>
           <input
             type="number"
             min="1"
             value={item.quantity}
+            placeholder="Cantidad"
             onChange={(e) =>
               handleItemChange(index, "quantity", Number(e.target.value))
             }
             required
           />
+          <h2>$</h2>
           <input
             type="number"
             min="0"
             value={item.price}
+            placeholder="Precio"
             onChange={(e) =>
               handleItemChange(index, "price", Number(e.target.value))
             }

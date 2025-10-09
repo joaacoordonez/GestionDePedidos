@@ -21,7 +21,14 @@ function OrderItem({ id, customer, items, status, date }) {
 
 OrderItem.propTypes = {
   id: PropTypes.number.isRequired,
-  customer: PropTypes.string.isRequired,
+  customer: (props, propName, componentName) => {
+    if (typeof props[propName] !== 'string') {
+      return new Error(`La propiedad \`${propName}\` en \`${componentName}\` debe ser una cadena.`);
+    }
+    if (props[propName].length < 3) {
+      return new Error(`La propiedad \`${propName}\` en \`${componentName}\` debe tener al menos 3 caracteres.`);
+    }
+  },
   items: PropTypes.arrayOf(
     PropTypes.shape({
       productId: PropTypes.number.isRequired,

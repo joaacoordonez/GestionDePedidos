@@ -12,7 +12,7 @@ function Dashboard({ filteredOrders, stats }) {
 
   return (
     <div className="dashboard">
-      <h2>📊 Panel de Gestión de Pedidos</h2>
+      <h2>Panel de Gestión de Pedidos</h2>
 
       <OrderFilter filter={filter} />
       <OrderStats
