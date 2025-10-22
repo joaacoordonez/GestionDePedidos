@@ -1,21 +1,34 @@
-const orders = [
+// src/data/orders.ts
+import { Order } from "../contexts/OrderContext/OrderContext";
+
+export const orders: Order[] = [
   {
     id: 1,
     customer: "Juan Pérez",
-    date: new Date(),
     status: "pending",
+    date: new Date("2025-10-22"),
     items: [
-      { productId: 101, name: "Mouse", quantity: 2, price: 1500 },
-      { productId: 102, name: "Teclado", quantity: 1, price: 3000 },
+      { productId: 1, name: "Producto A", quantity: 2, price: 100 },
+      { productId: 2, name: "Producto B", quantity: 1, price: 50 },
     ],
   },
   {
     id: 2,
     customer: "María López",
-    date: new Date(),
     status: "shipped",
-    items: [{ productId: 201, name: "Notebook", quantity: 1, price: 250000 }],
+    date: new Date("2025-10-20"),
+    items: [
+      { productId: 3, name: "Producto C", quantity: 3, price: 75 },
+    ],
+  },
+  {
+    id: 3,
+    customer: "Carlos García",
+    status: "delivered",
+    date: new Date("2025-10-18"),
+    items: [
+      { productId: 4, name: "Producto D", quantity: 1, price: 120 },
+      { productId: 5, name: "Producto E", quantity: 2, price: 60 },
+    ],
   },
 ];
-
-export default orders;

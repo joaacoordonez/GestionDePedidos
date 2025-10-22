@@ -1,38 +1,45 @@
-import React, { useState, useContext } from "react";
-import PropTypes from "prop-types";
-import { OrdersContext } from "../../contexts/OrderContext/OrderContext.jsx";
+import React, { useState, useContext, ChangeEvent, FormEvent } from "react";
+import { OrdersContext, OrderStatus } from "../../contexts/OrderContext/OrderContext";
 import "./NewOrderForm.css";
 
+interface OrderItem {
+  productId: number;
+  name: string;
+  quantity: number;
+  price: number;
+}
 
-function NewOrderForm() {
+interface NewOrder {
+  customer: string;
+  status: OrderStatus;
+  items: OrderItem[];
+}
+
+const NewOrderForm: React.FC = () => {
   const { addOrder } = useContext(OrdersContext);
 
-  const [customer, setCustomer] = useState("");
-  const [status, setStatus] = useState("pending");
-  const [items, setItems] = useState([
+  const [customer, setCustomer] = useState<string>("");
+  const [status, setStatus] = useState<OrderStatus>("pending");
+  const [items, setItems] = useState<OrderItem[]>([
     { productId: 1, name: "", quantity: 1, price: 0 },
   ]);
 
-  // Manejar cambio en los productos
-  const handleItemChange = (index, field, value) => {
-    const newItems = [...items];
-    newItems[index][field] = value;
-    setItems(newItems);
+  const handleItemChange = (index: number, field: keyof OrderItem, value: string | number) => {
+    setItems((prev) => {
+      const newItems = [...prev];
+      newItems[index] = { ...newItems[index], [field]: value } as OrderItem;
+      return newItems;
+    });
   };
 
-  // Agregar un producto nuevo al formulario
   const addItem = () => {
-    setItems([
-      ...items,
-      { productId: items.length + 1, name: "", quantity: 1, price: 0 },
-    ]);
+    setItems((prev) => [...prev, { productId: prev.length + 1, name: "", quantity: 1, price: 0 }]);
   };
 
-  // Enviar pedido
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (customer.length < 3) {
+    if (customer.trim().length < 3) {
       alert("El nombre del cliente debe tener al menos 3 caracteres.");
       return;
     }
@@ -42,13 +49,7 @@ function NewOrderForm() {
       return;
     }
 
-    const newOrder = {
-      customer,
-      status,
-      items,
-    };
-
-    addOrder(newOrder);
+    addOrder({ customer, status, items });
     setCustomer("");
     setStatus("pending");
     setItems([{ productId: 1, name: "", quantity: 1, price: 0 }]);
@@ -60,17 +61,12 @@ function NewOrderForm() {
 
       <label>
         Cliente:
-        <input
-          type="text"
-          value={customer}
-          onChange={(e) => setCustomer(e.target.value)}
-          required
-        />
+        <input type="text" value={customer} onChange={(e) => setCustomer(e.target.value)} required />
       </label>
 
       <label>
         Estado:
-        <select value={status} onChange={(e) => setStatus(e.target.value)}>
+        <select value={status} onChange={(e) => setStatus(e.target.value as OrderStatus)}>
           <option value="pending">Pendiente</option>
           <option value="shipped">Enviado</option>
           <option value="delivered">Entregado</option>
@@ -87,15 +83,12 @@ function NewOrderForm() {
             onChange={(e) => handleItemChange(index, "name", e.target.value)}
             required
           />
-          <h2>Cantidad: </h2>
+          <h2>Cantidad:</h2>
           <input
             type="number"
             min="1"
             value={item.quantity}
-            placeholder="Cantidad"
-            onChange={(e) =>
-              handleItemChange(index, "quantity", Number(e.target.value))
-            }
+            onChange={(e) => handleItemChange(index, "quantity", Number(e.target.value))}
             required
           />
           <h2>$</h2>
@@ -103,25 +96,18 @@ function NewOrderForm() {
             type="number"
             min="0"
             value={item.price}
-            placeholder="Precio"
-            onChange={(e) =>
-              handleItemChange(index, "price", Number(e.target.value))
-            }
+            onChange={(e) => handleItemChange(index, "price", Number(e.target.value))}
             required
           />
         </div>
       ))}
+
       <button type="button" onClick={addItem}>
         ➕ Agregar Producto
       </button>
-
       <button type="submit">Guardar Pedido</button>
     </form>
   );
-}
-
-NewOrderForm.propTypes = {
-  addOrder: PropTypes.func,
 };
 
 export default NewOrderForm;
