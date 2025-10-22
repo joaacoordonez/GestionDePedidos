@@ -2,14 +2,13 @@ import React, { useState, useContext, ChangeEvent, FormEvent } from "react";
 import { OrdersContext, OrderStatus } from "../../contexts/OrderContext/OrderContext";
 import "./NewOrderForm.css";
 
-interface OrderItem {
+type OrderItem = {
   productId: number;
   name: string;
   quantity: number;
   price: number;
 }
-
-interface NewOrder {
+type NewOrder = {
   customer: string;
   status: OrderStatus;
   items: OrderItem[];
@@ -41,6 +40,11 @@ const NewOrderForm: React.FC = () => {
 
     if (customer.trim().length < 3) {
       alert("El nombre del cliente debe tener al menos 3 caracteres.");
+      return;
+    }
+
+    if (!/^[a-zA-Z\s]+$/.test(customer.trim())) {
+      alert("El nombre del cliente solo puede contener letras y espacios.");
       return;
     }
 

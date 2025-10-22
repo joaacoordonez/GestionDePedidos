@@ -5,14 +5,14 @@ import OrderList from "../OrderList/OrderList";
 import OrderStats from "../OrderStats/OrderStats";
 import "./Dashboard.css";
 
-interface Stats {
+type Stats = {
   total: number;
   pending: number;
   shipped: number;
   delivered: number;
 }
 
-interface DashboardProps {
+type DashboardProps = {
   filteredOrders: Order[];
   stats: Stats;
 }

@@ -1,7 +1,7 @@
 import React from "react";
 import "./orderStats.css";
 
-interface OrderStatsProps {
+type OrderStatsProps = {
   total: number;
   pending: number;
   shipped: number;

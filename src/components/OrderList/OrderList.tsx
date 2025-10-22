@@ -3,7 +3,7 @@ import OrderItem from "../OrderItem/OrderItem";
 import { Order } from "../../contexts/OrderContext/OrderContext";
 import "./orderList.css";
 
-interface OrderListProps {
+type OrderListProps = {
   orders: Order[];
 }
 

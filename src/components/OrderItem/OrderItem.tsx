@@ -2,7 +2,7 @@ import React from "react";
 import "./orderItem.css";
 import { OrderItem as OrderProduct, OrderStatus } from "../../contexts/OrderContext/OrderContext";
 
-interface OrderItemProps {
+type OrderItemProps = {
   id: number;
   customer: string;
   items: OrderProduct[];

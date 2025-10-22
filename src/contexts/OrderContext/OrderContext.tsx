@@ -5,14 +5,14 @@ export type OrderStatus = "pending" | "shipped" | "delivered";
 export type FilterType = OrderStatus | "all";
 
 // Tipos de productos y pedidos
-export interface OrderItem {
+export type OrderItem = {
   productId: number;
   name: string;
   quantity: number;
   price: number;
 }
 
-export interface Order {
+export type Order = {
   id: number;
   customer: string;
   items: OrderItem[];
@@ -21,7 +21,7 @@ export interface Order {
 }
 
 // Tipo del contexto
-export interface OrdersContextType {
+export type OrdersContextType = {
   orders: Order[];
   setOrders: (orders: Order[]) => void;
   filter: FilterType;
@@ -39,7 +39,7 @@ export const OrdersContext = createContext<OrdersContextType>({
 });
 
 // Provider
-interface OrdersProviderProps {
+type OrdersProviderProps = {
   children: ReactNode;
 }
 

@@ -2,7 +2,7 @@ import React, { useContext, ChangeEvent } from "react";
 import { OrdersContext, FilterType } from "../../contexts/OrderContext/OrderContext";
 import "./orderFilter.css";
 
-interface OrderFilterProps {
+type OrderFilterProps = {
   filter: FilterType;
 }
 
