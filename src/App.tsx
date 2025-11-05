@@ -1,7 +1,10 @@
-import React, { useState, useMemo, useCallback } from "react";
+import React, { useState, useCallback } from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { OrdersContext, Order, FilterType, OrderStatus } from "./contexts/OrderContext/OrderContext";
-import Dashboard from "./components/Dashboard/Dashboard";
-import NewOrderForm from "./components/NewOrderForm/NewOrderForm";
+import Navigation from "./components/Navigation/Navigation";
+import OrdersPage from "./pages/OrdersPage";
+import NewOrderPage from "./pages/NewOrderPage";
+import StatsPage from "./pages/StatsPage";
 import { orders as ordersData } from "./data/orders";
 
 const App: React.FC = () => {
@@ -18,36 +21,21 @@ const App: React.FC = () => {
     []
   );
 
-  const filteredOrders = useMemo(() => {
-    if (filter === "all") return orders;
-    return orders.filter((pedido) => pedido.status === filter);
-  }, [orders, filter]);
-
-  const stats = useMemo(() => {
-    const pending = orders.filter((o) => o.status === "pending").length;
-    const shipped = orders.filter((o) => o.status === "shipped").length;
-    const delivered = orders.filter((o) => o.status === "delivered").length;
-    return {
-      total: orders.length,
-      pending,
-      shipped,
-      delivered,
-    };
-  }, [orders]);
-
   return (
     <OrdersContext.Provider
       value={{ orders, setOrders, filter, setFilter, addOrder }}
     >
-      <div className="app">
-        <h1>MailAméricas - Sistema de Gestión de Pedidos</h1>
-
-        <Dashboard filteredOrders={filteredOrders} stats={stats} />
-
-        <div style={{ display: "flex", justifyContent: "center" }}>
-          <NewOrderForm />
+      <Router basename="/GestionDePedidos">
+        <div className="app">
+          <h1>MailAméricas - Sistema de Gestión de Pedidos</h1>
+          <Navigation />
+          <Routes>
+            <Route path="/" element={<OrdersPage />} />
+            <Route path="/nuevo-pedido" element={<NewOrderPage />} />
+            <Route path="/estadisticas" element={<StatsPage />} />
+          </Routes>
         </div>
-      </div>
+      </Router>
     </OrdersContext.Provider>
   );
 };

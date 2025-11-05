@@ -1,4 +1,3 @@
-// src/data/orders.ts
 import { Order } from "../contexts/OrderContext/OrderContext";
 
 export const orders: Order[] = [
